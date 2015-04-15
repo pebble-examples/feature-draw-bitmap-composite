@@ -12,7 +12,7 @@
   "resources": {
     "media": [
       {
-        "type": "png",
+        "type": "pbi",
         "name": "IMAGE_PUG",
         "file": "images/pug.png"
       }
