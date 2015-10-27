@@ -29,14 +29,17 @@ static void layer_update_callback(Layer *layer, GContext *ctx) {
 
   // Display the name of the current compositing operation
   graphics_context_set_text_color(ctx, GColorBlack);
-  graphics_draw_text(ctx, s_gcompops[s_current_gcompop].name, fonts_get_system_font(FONT_KEY_GOTHIC_18), bounds, GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, NULL);
+  graphics_draw_text(ctx, s_gcompops[s_current_gcompop].name, 
+                     fonts_get_system_font(FONT_KEY_GOTHIC_18), 
+                     PBL_IF_RECT_ELSE(bounds, GRect(0, 35, bounds.size.w, bounds.size.h)), 
+                     GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, NULL);
 
   // Draw the large circle the image will composite with
   graphics_context_set_fill_color(ctx, GColorBlack);
   graphics_fill_circle(ctx, GPoint(bounds.size.w / 2, bounds.size.h + 110), 180);
 
   // Use the image size to help center the image
-#ifdef PBL_PLATFORM_BASALT
+#ifdef PBL_SDK_3
   GRect destination = gbitmap_get_bounds(s_image);
 #else
   GRect destination = s_image->bounds;
@@ -44,7 +47,7 @@ static void layer_update_callback(Layer *layer, GContext *ctx) {
 
   // Center horizontally using the window frame size
   destination.origin.x = (bounds.size.w - destination.size.w) / 2;
-  destination.origin.y = 50;
+  destination.origin.y = PBL_IF_RECT_ELSE(50, 70);
 
   // Set the current compositing operation
   // This will only cause bitmaps to composite
