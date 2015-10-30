@@ -39,15 +39,11 @@ static void layer_update_callback(Layer *layer, GContext *ctx) {
   graphics_fill_circle(ctx, GPoint(bounds.size.w / 2, bounds.size.h + 110), 180);
 
   // Use the image size to help center the image
-#ifdef PBL_SDK_3
   GRect destination = gbitmap_get_bounds(s_image);
-#else
-  GRect destination = s_image->bounds;
-#endif
 
   // Center horizontally using the window frame size
   destination.origin.x = (bounds.size.w - destination.size.w) / 2;
-  destination.origin.y = PBL_IF_RECT_ELSE(50, 70);
+  destination.origin.y = PBL_IF_RECT_ELSE(60, 70);
 
   // Set the current compositing operation
   // This will only cause bitmaps to composite
@@ -94,6 +90,9 @@ static void main_window_unload(Window *window) {
 
 static void init() {
   s_main_window = window_create();
+#ifdef PBL_SDK_2
+  window_set_fullscreen(s_main_window, true);
+#endif
   window_set_click_config_provider(s_main_window, click_config_provider);
   window_set_window_handlers(s_main_window, (WindowHandlers) {
     .load = main_window_load,
