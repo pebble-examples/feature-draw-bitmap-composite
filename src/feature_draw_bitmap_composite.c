@@ -29,9 +29,9 @@ static void layer_update_callback(Layer *layer, GContext *ctx) {
 
   // Display the name of the current compositing operation
   graphics_context_set_text_color(ctx, GColorBlack);
-  graphics_draw_text(ctx, s_gcompops[s_current_gcompop].name, 
-                     fonts_get_system_font(FONT_KEY_GOTHIC_18), 
-                     PBL_IF_RECT_ELSE(bounds, GRect(0, 35, bounds.size.w, bounds.size.h)), 
+  graphics_draw_text(ctx, s_gcompops[s_current_gcompop].name,
+                     fonts_get_system_font(FONT_KEY_GOTHIC_18),
+                     PBL_IF_RECT_ELSE(bounds, GRect(0, 35, bounds.size.w, bounds.size.h)),
                      GTextOverflowModeTrailingEllipsis, GTextAlignmentCenter, NULL);
 
   // Draw the large circle the image will composite with
@@ -90,9 +90,6 @@ static void main_window_unload(Window *window) {
 
 static void init() {
   s_main_window = window_create();
-#ifdef PBL_SDK_2
-  window_set_fullscreen(s_main_window, true);
-#endif
   window_set_click_config_provider(s_main_window, click_config_provider);
   window_set_window_handlers(s_main_window, (WindowHandlers) {
     .load = main_window_load,
